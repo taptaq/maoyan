@@ -1,0 +1,32 @@
+1. public文件夹中可放一些较大的图片，公共css，js等静态资源
+
+2. src文件夹中：
+   assets文件夹中可放一些较小的图片或图片（压缩式可压缩为base64）
+   views里面可放页面级别的组件
+   components里面可放公共组件
+
+3.main.js负责渲染主组件
+
+4.在设置路由时：component:()=>import('@/views/movie')  这种方式能按需加载组件
+
+5.子组件通过props来获取父组件传递过来的值，被引用的就是子组件
+（子组件中的data数据，不是通过父组件传递的是子组件私有的，是可读可写的。
+   子组件中的所有 props中的数据，都是通过父组件传递给子组件的，是只读的。）
+
+6.设置重定向：（在router index.js中设置）
+    path:'/*',
+    redirect: '/' 
+
+7.设置二级路由(在router中的文件下设置)
+children:[  //子组件(二级路由)
+        {
+            path:'city',
+            component:()=>import('@/components/city'),  
+        },
+    ]
+
+
+8.渲染子路由时，记得在对应位置加上路由出口：
+<keep-alive>
+          <router-view />
+</keep-alive>
