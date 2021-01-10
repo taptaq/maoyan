@@ -1,0 +1,179 @@
+{
+    "brand": {
+        "name": "品牌",
+        "subItems": [
+            {
+                "count": 5,
+                "id": -1,
+                "name": "全部"
+            },
+            {
+                "count": 1,
+                "id": 204208,
+                "name": "星美国际影城"
+            },
+            {
+                "count": 1,
+                "id": 481587,
+                "name": "中影星美国际影城"
+            },
+            {
+                "count": 1,
+                "id": 327981,
+                "name": "大地影院"
+            },
+            {
+                "count": 2,
+                "id": 0,
+                "name": "其他"
+            }
+        ]
+    },
+    "district": {
+        "name": "行政区",
+        "subItems": [
+            {
+                "count": 5,
+                "id": -1,
+                "name": "全部",
+                "subItems": []
+            },
+            {
+                "count": 2,
+                "id": 36132,
+                "name": "人民东路/鹤山广场",
+                "subItems": []
+            },
+            {
+                "count": 1,
+                "id": 44884,
+                "name": "鹤山大润发",
+                "subItems": []
+            },
+            {
+                "count": 1,
+                "id": 45592,
+                "name": "新天地",
+                "subItems": []
+            },
+            {
+                "count": 1,
+                "id": 36010,
+                "name": "坚美广场",
+                "subItems": []
+            }
+        ]
+    },
+    "hallType": {
+        "name": "特殊厅",
+        "subItems": [
+            {
+                "count": 0,
+                "id": -1,
+                "name": "全部"
+            },
+            {
+                "count": 0,
+                "id": 9,
+                "name": "杜比全景声厅"
+            },
+            {
+                "count": 0,
+                "id": 24,
+                "name": "儿童厅"
+            },
+            {
+                "count": 0,
+                "id": 7,
+                "name": "4D厅"
+            }
+        ]
+    },
+    "service": {
+        "name": "服务",
+        "subItems": [
+            {
+                "count": 5,
+                "id": -1,
+                "name": "全部"
+            },
+            {
+                "count": 5,
+                "id": 3,
+                "name": "可改签"
+            },
+            {
+                "count": 4,
+                "id": 2,
+                "name": "可退票"
+            }
+        ]
+    },
+    "showType": null,
+    "subway": {
+        "name": "地铁",
+        "subItems": [
+            {
+                "count": 0,
+                "id": -1,
+                "name": "全部",
+                "subItems": []
+            }
+        ]
+    },
+    "timeRanges": {
+        "name": "时段",
+        "subItems": [
+            {
+                "count": 0,
+                "id": 100000000,
+                "name": "不限时段"
+            },
+            {
+                "count": 0,
+                "id": 100000900,
+                "name": "9点以前"
+            },
+            {
+                "count": 0,
+                "id": 109001100,
+                "name": "9-11点"
+            },
+            {
+                "count": 0,
+                "id": 111001300,
+                "name": "11-13点"
+            },
+            {
+                "count": 0,
+                "id": 113001500,
+                "name": "13-15点"
+            },
+            {
+                "count": 0,
+                "id": 115001700,
+                "name": "15-17点"
+            },
+            {
+                "count": 0,
+                "id": 117001900,
+                "name": "17-19点"
+            },
+            {
+                "count": 0,
+                "id": 119002100,
+                "name": "19-21点"
+            },
+            {
+                "count": 0,
+                "id": 121002300,
+                "name": "21-23点"
+            },
+            {
+                "count": 0,
+                "id": 123002359,
+                "name": "23点以后"
+            }
+        ]
+    }
+}

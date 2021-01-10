@@ -30,3 +30,20 @@ children:[  //子组件(二级路由)
 <keep-alive>
           <router-view />
 </keep-alive>
+
+9.跨域问题：
+在vue.config.js文件下编写
+module.exports= {
+    devServer:{
+        proxy:{
+            '/api':{      // '/api'代理
+                target:'http://localhost:8082',  //对应域地址
+                changeOrigin:true
+            }
+        }
+    }
+}
+
+10.过滤器filter的使用
+<img :src="item.img | setWH('128.180')" alt="" />
+参考网址：https://cn.vuejs.org/v2/guide/filters.html

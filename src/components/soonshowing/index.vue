@@ -2,19 +2,23 @@
   <section>
     <div class="movie_body">
       <ul>
-        <li>
+        <li v-for="(item, index) in soonmovielist" :key="index">
           <div class="pic_show">
-            <img src="" alt="" />
+            <img :src="item.img | setWH('128.180')" alt="" />
           </div>
 
           <div class="info_list">
-            <h2>送你一朵小红花</h2>
+            <h2>
+              {{ item.nm }}
+              <img v-if="item.version == 'v3d imax'" src="@/assets/v3d.png" alt="" />
+              <img v-if="item.version == 'v2d imax'" src="@/assets/v2d.png" alt="" />
+            </h2>
             <p>
-              <span class="person">17746</span>
+              <span class="person">{{ item.wish }}</span>
               人想看
             </p>
-            <p>主演：易烊千玺,刘浩存</p>
-            <p>2020-12-31上映</p>
+            <p>主演：{{ item.star }}</p>
+            <p>{{ item.rt }}上映</p>
           </div>
 
           <div class="btn_pre">预告</div>
@@ -27,6 +31,17 @@
 <script>
 export default {
   name: "soonshowing",
+  data() {
+    return {
+      soonmovielist: [],
+    };
+  },
+  mounted() {
+    this.axios.get("/json/soonshowing.json").then((res) => {
+      this.soonmovielist = res.data.coming;
+      // console.log(this.soonmovielist);
+    });
+  },
 };
 </script>
 
@@ -34,6 +49,12 @@ export default {
 .movie_body {
   flex: 1;
   overflow: auto;
+  height: 86vh;
+}
+
+.movie_body::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0;
 }
 
 .movie_body ul {
@@ -42,17 +63,16 @@ export default {
 }
 
 .movie_body ul li {
-  margin-top: 12px;
+  margin-top: 15px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #e6e6e6;
-  padding-bottom: 10px;
+  padding-bottom: 15px;
 }
 
 .movie_body .pic_show {
   width: 64px;
   height: 90px;
-  border: 1px solid #000;
 }
 
 .movie_body .pic_show img {
@@ -69,9 +89,18 @@ export default {
   font-size: 17px;
   line-height: 24px;
   width: 150px;
-  overflow: hidden;
+  position: relative;
+  /* overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
+}
+
+.movie_body .info_list h2 img {
+  width: 55px;
+  height: 22px;
+  position: absolute;
+  right: -38px;
+  top: 3px;
 }
 
 .movie_body .info_list p {

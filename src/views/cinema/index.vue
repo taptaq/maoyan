@@ -48,6 +48,11 @@ export default {
   flex-direction: column;
 }
 
+.content::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0;
+}
+
 .cinema_menu {
   width: 100%;
   height: 45px;
