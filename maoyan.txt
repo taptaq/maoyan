@@ -47,3 +47,59 @@ module.exports= {
 10.过滤器filter的使用
 <img :src="item.img | setWH('128.180')" alt="" />
 参考网址：https://cn.vuejs.org/v2/guide/filters.html
+
+11.better-scroll插件的使用
+可实现上拉加载等功能，可定义为单个组件（全局）
+
+12.本地存储local storage
+localStorage.getItem("xxx")  //从local storage中取值   
+window.localStorage.setItem("xxx", JSON.stringify(data));  //存储值到local storage  （json.strngify是转为字符串）
+
+13.状态管理  store.js的配置
+可新建一个js文件配置相关状态信息(如city.js)
+四件套：
+const state={  //放全局参数（存储状态）
+    // 初始值 
+    nm:'北京',
+    id:1
+};
+
+const actions={   //和mutations相似，但支持异步
+};
+
+const mutations={    //set方法（提交状态修改）不支持异步
+    CITY_INFO(state,payload){
+        state.nm=payload.nm;
+        state.id=payload.id;
+    }
+};
+this.$store.commit("city/CITY_INFO", { nm, id });
+
+const getters={   //派生状态
+};
+外部调用方式：store.getters.personInfo()
+
+export default {
+    namespaced:true,
+    state,
+    actions,
+    mutations
+}
+如果时另开文件，那可以在store.js中的modules中引入该模型
+
+
+14.生命周期
+https://cn.vuejs.org/v2/guide/instance.html#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E7%A4%BA
+
+15.Vue.extend()
+使用基础 Vue 构造器，创建一个“子类”。参数是一个包含组件选项的对象。
+参考网址：https://cn.vuejs.org/v2/api/index.html#Vue-extend
+
+16.有些情况导入的时候要加个{}
+通过export function fnt(){} 导出的方法或函数是 要加上花括号{ fnt } 的
+
+
+
+
+
+

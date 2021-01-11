@@ -1,25 +1,28 @@
 <template>
   <section>
     <div class="cinema_body">
-      <ul>
-        <li v-for="(item, index) in cinemalist" :key="index">
-          <div>
-            <span>{{ item.name }}</span>
-            <span class="q">
-              <span class="price">{{ item.price }}</span>
-              元起
-            </span>
-          </div>
-          <div class="address">
-            <span>{{ item.address }}</span>
-            <span>{{ item.distance }}</span>
-          </div>
-          <div class="card">
-            <div>小吃</div>
-            <div>折扣卡</div>
-          </div>
-        </li>
-      </ul>
+      <loading v-if="isloading" />
+      <scroller v-else>
+        <ul>
+          <li v-for="(item, index) in cinemalist" :key="index">
+            <div>
+              <span>{{ item.name }}</span>
+              <span class="q">
+                <span class="price">{{ item.price }}</span>
+                元起
+              </span>
+            </div>
+            <div class="address">
+              <span>{{ item.address }}</span>
+              <span>{{ item.distance }}</span>
+            </div>
+            <div class="card">
+              <div>小吃</div>
+              <div>折扣卡</div>
+            </div>
+          </li>
+        </ul>
+      </scroller>
     </div>
   </section>
 </template>
@@ -30,12 +33,14 @@ export default {
   data() {
     return {
       cinemalist: [],
+      isloading: true,
     };
   },
   mounted() {
     this.axios.get("json/address.json").then((res) => {
       this.cinemalist = res.data;
-      console.log(this.cinemalist);
+      this.isloading = false;
+      // console.log(this.cinemalist);
     });
   },
 };

@@ -6,7 +6,7 @@
       <div class="content">
         <div class="movie_menu">
           <router-link tag="div" class="city_name" to="/city">
-            <span>北京</span>
+            <span>{{ $store.state.city.nm }}</span>
             <i class="iconfont icon-arrow"></i>
           </router-link>
 
@@ -35,11 +35,35 @@
 <script>
 // 引入头部固件
 import Header from "@/components/Header";
+import { Messagebox } from "@/components/js";
 
 export default {
   name: "movie",
   components: {
     Header,
+  },
+  mounted() {
+    setTimeout(() => {
+      this.axios.get("/json/location.json").then((res) => {
+        var cityname = res.data.data.citynm;
+        var cityid = res.data.data.id;
+        if (this.$store.state.city.nm === cityname) {
+          //若定位城市相同，则不用弹窗
+          return;
+        }
+        Messagebox({
+          title: "定位",
+          content: cityname,
+          cancel: "取消",
+          ok: "切换定位",
+          handleOk() {
+            window.localStorage.setItem("nowcity", cityname);
+            window.localStorage.setItem("nowcityid", cityid);
+            window.location.reload();
+          },
+        });
+      });
+    }, 3000);
   },
 };
 </script>
