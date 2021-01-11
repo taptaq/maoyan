@@ -2,21 +2,38 @@
   <section>
     <div class="city_body">
       <div class="city_list">
-        <div class="city_hot">
-          <h2>热门城市</h2>
-          <ul class="clearfix">
-            <li v-for="(item, index) in hotcitydata" :key="index">{{ item }}</li>
-          </ul>
-        </div>
+        <loading v-if="isloading" />
+        <scroller v-else ref="city_list">
+          <div>
+            <div class="city_hot">
+              <h2>热门城市</h2>
+              <ul class="clearfix">
+                <li
+                  v-for="(item, index) in hotcitydata"
+                  :key="index"
+                  @click="handletocity(item, index)"
+                >
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
 
-        <div class="city_sort" ref="city_sort">
-          <div v-for="(item, index) in citylist" :key="index">
-            <h2>{{ item.title }}</h2>
-            <ul>
-              <li v-for="(item, index) in item.lists" :key="index">{{ item }}</li>
-            </ul>
+            <div class="city_sort" ref="city_sort">
+              <div v-for="(item, index) in citylist" :key="index">
+                <h2>{{ item.title }}</h2>
+                <ul>
+                  <li
+                    v-for="(item, index) in item.lists"
+                    :key="index"
+                    @click="handletocity(item, index)"
+                  >
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
+        </scroller>
       </div>
       <div class="city_index">
         <ul>
@@ -40,17 +57,31 @@ export default {
     return {
       hotcitydata: [],
       citylist: [],
+      isloading: true,
     };
   },
   mounted() {
-    this.axios.get("/json/city.json").then((res) => {
-      var msg = res.statusText;
-      if (msg === "OK") {
-        this.hotcitydata = res.data.hotcity[0].lists;
-        this.citylist = res.data.city;
-        console.log(this.citylist);
-      }
-    });
+    // 从本地存储localstorage中取值
+    var citylist = localStorage.getItem("citylist");
+    var hotcitylist = localStorage.getItem("hotcitylist");
+
+    if (citylist && hotcitylist) {
+      this.citylist = JSON.parse(citylist);
+      this.hotcitylist = JSON.parse(hotcitylist);
+      this.isloading = false;
+    } else {
+      this.axios.get("/json/city.json").then((res) => {
+        var msg = res.statusText;
+        if (msg === "OK") {
+          this.hotcitydata = res.data.hotcity[0].lists;
+          this.citylist = res.data.city;
+          this.isloading = false;
+          // 存值到localstorage
+          window.localStorage.setItem("citylist", JSON.stringify(this.citylist));
+          window.localStorage.setItem("hotcitylist", JSON.stringify(this.hotcitydata));
+        }
+      });
+    }
   },
   methods: {
     //格式化城市数据为([{index: firstLetter,lists: [{ nm: xxx, id: xxx}]})
@@ -110,7 +141,15 @@ export default {
     // 跳转到指定的城市字母的位置
     handleToIndex(index) {
       var h2 = this.$refs.city_sort.getElementsByTagName("h2");
-      this.$refs.city_sort.parentNode.scrollTop = h2[index].offsetTop;
+      this.$refs.city_list.toscrolltop(-h2[index].offsetTop);
+      // this.$refs.city_sort.parentNode.scrollTop = h2[index].offsetTop;
+    },
+
+    handletocity(nm, id) {
+      this.$store.commit("city/CITY_INFO", { nm, id });
+      window.localStorage.setItem("nowcity", nm);
+      window.localStorage.setItem("nowcityid", id);
+      this.$router.push("/");
     },
   },
 };

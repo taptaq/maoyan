@@ -1,29 +1,37 @@
 <template>
   <section>
-    <div class="movie_body">
-      <ul>
-        <li v-for="item in movielist" :key="item.id">
-          <div class="pic_show">
-            <img :src="item.img | setWH('128.180')" alt="" />
-          </div>
+    <div class="movie_body" ref="movie_body">
+      <loading v-if="isloading" />
+      <scroller
+        v-else
+        :handletoscroll="handletoscroll"
+        :handletotouchEnd="handletotouchEnd"
+      >
+        <ul>
+          <li class="pulldownmsg">{{ pulldownmessage }}</li>
+          <li v-for="item in movielist" :key="item.id">
+            <div class="pic_show" @click="handletodetail">
+              <img :src="item.img | setWH('128.180')" alt="" />
+            </div>
 
-          <div class="info_list">
-            <h2>
-              {{ item.nm }}
-              <img v-if="item.version == 'v3d imax'" src="@/assets/v3d.png" alt="" />
-              <img v-if="item.version == 'v2d imax'" src="@/assets/v2d.png" alt="" />
-            </h2>
-            <p>
-              观众评：
-              <span class="grade">{{ item.sc }}</span>
-            </p>
-            <p>主演：{{ item.star }}</p>
-            <p>{{ item.showInfo }}</p>
-          </div>
+            <div class="info_list">
+              <h2>
+                {{ item.nm }}
+                <img v-if="item.version == 'v3d imax'" src="@/assets/v3d.png" alt="" />
+                <img v-if="item.version == 'v2d imax'" src="@/assets/v2d.png" alt="" />
+              </h2>
+              <p>
+                观众评：
+                <span class="grade">{{ item.sc }}</span>
+              </p>
+              <p>主演：{{ item.star }}</p>
+              <p>{{ item.showInfo }}</p>
+            </div>
 
-          <div class="btn_mall">购票</div>
-        </li>
-      </ul>
+            <div class="btn_mall">购票</div>
+          </li>
+        </ul>
+      </scroller>
     </div>
   </section>
 </template>
@@ -34,6 +42,8 @@ export default {
   data() {
     return {
       movielist: [],
+      pulldownmessage: "",
+      isloading: true,
     };
   },
   mounted() {
@@ -41,9 +51,36 @@ export default {
       var msg = res.statusText;
       if (msg === "OK") {
         this.movielist = res.data.movieList;
-        // console.log(this.movielist);
+        this.isloading = false;
       }
     });
+  },
+
+  methods: {
+    handletodetail() {
+      console.log("detail");
+    },
+
+    handletoscroll(pos) {
+      if (pos.y > 30) {
+        this.pulldownmessage = "正在获取信息";
+      }
+    },
+
+    handletotouchEnd(pos) {
+      if (pos.y > 30) {
+        this.axios.get("/json/nowshowing.json").then((res) => {
+          var msg = res.statusText;
+          if (msg === "OK") {
+            this.pulldownmessage = "获取成功";
+            setTimeout(() => {
+              this.movielist = res.data.movieList;
+              this.pulldownmessage = "";
+            }, 1000);
+          }
+        });
+      }
+    },
   },
 };
 </script>
@@ -52,7 +89,7 @@ export default {
 .movie_body {
   flex: 1;
   overflow: auto;
-  height: 86vh;
+  height: 80vh;
 }
 
 .movie_body::-webkit-scrollbar {
@@ -63,6 +100,16 @@ export default {
 .movie_body ul {
   margin: 0 12px;
   overflow: auto;
+}
+
+.movie_body ul .pulldownmsg {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .movie_body ul li {
