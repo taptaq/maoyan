@@ -9,7 +9,11 @@
       >
         <ul>
           <li class="pulldownmsg">{{ pulldownmessage }}</li>
-          <li v-for="(item, index) in soonmovielist" :key="index">
+          <li
+            v-for="(item, index) in soonmovielist"
+            :key="index"
+            @touchstart="handletodetail(item.id)"
+          >
             <div class="pic_show">
               <img :src="item.img | setWH('128.180')" alt="" />
             </div>
@@ -54,8 +58,8 @@ export default {
     });
   },
   methods: {
-    handletodetail() {
-      console.log("detail");
+    handletodetail(movieid) {
+      this.$router.push("/detail/2/" + movieid);
     },
 
     handletoscroll(pos) {

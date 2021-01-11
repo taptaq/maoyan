@@ -19,6 +19,7 @@ Vue.component('scroller',scroller);
 import loading from '@/components/loading'
 Vue.component('loading',loading);  
 
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
  
  
 class Test:
-    url = 'https://dianying.taobao.com/'
+    url = 'https://maoyan.com/films/1334342?$from=canary&channelId=4'
     options = webdriver.ChromeOptions()
     # 不加载图片,加快访问速度
     options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
@@ -27,22 +27,35 @@ class Test:
     # driver.refresh()
  
     result = []
-    items = driver.find_elements_by_css_selector('div.cityList')
+    items = driver.find_elements_by_css_selector('div.wrapper')
     for item in items:
-        cityname = item.find_element_by_css_selector('div.cityBox > div.cityTitle > a.ignore-city').text
-        print(cityname)
-        #address = item.find_element_by_css_selector('div.cinema-info p.cinema-address').text
-        #print(address)
-        #image = item.find_element_by_css_selector('div.ex-item-top img').get_attribute('src')
-        #print(image)
+        name = item.find_element_by_css_selector('div.celeInfo-right div.movie-brief-container h1.name').text
+        print(name)
+        ename = item.find_element_by_css_selector('div.celeInfo-right div.movie-brief-container div.ename').text
+        print(ename)
+        mtype = item.find_element_by_css_selector('div.celeInfo-right div.movie-brief-container ul li.ellipsis').text
+        print(mtype)
+        #star = item.find_element_by_css_selector('div.movie-info-top div.movie-desc div.movie-desc-top div.movie-other-info div.actors a').text
+        #print(star)
+        #time = item.find_element_by_css_selector('div.movie-info-top div.movie-desc div.movie-desc-top div.movie-other-info div.movie-show-time span').text
+        #print(time)
+        #brief = item.find_element_by_css_selector('brief-introduction div.content p.line-clamp').text
+        #print(brief)
+        img = item.find_element_by_css_selector('div.celeInfo-left div.avatar-shadow img').get_attribute('src')
+        print(img)
         one = {}
-        one['cityname'] = cityname
-        #one['hot'] = '1'
+        one['name'] = name
+        one['ename'] = ename
+        one['mtype'] = mtype
+        one['star'] = ''
+        one['time'] = ''
+        one['brief'] = ''
+        one['img'] = img
         result.append(one)
  
  
     with open('G:\\网页设计\有关项目\猫眼电影\maoy\data.json', 'w', encoding='utf-8') as file:
         file.write(json.dumps(result, indent=2, ensure_ascii=False))
  
-    time.sleep(10)
+    #time.sleep(10)
     # driver.close()  # 关闭浏览器
