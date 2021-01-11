@@ -6,7 +6,12 @@
     <loading v-if="isloading" />
     <div v-else class="contentdetail">
       <div class="detail_list">
-        <div class="detail_list_bg"></div>
+        <div
+          class="detail_list_bg"
+          :style="{
+            'background-image': 'url(' + detailinfo.img.replace(/w\.h/, 148.208) + ')',
+          }"
+        ></div>
         <div class="detail_list_filter"></div>
         <div class="detail_list_content">
           <div class="detail_list_img">
@@ -126,8 +131,7 @@ export default {
 .detail_list .detail_list_bg {
   width: 100%;
   height: 100%;
-  /* background: url(/public/1.png) 0 40%; */
-  background: rgb(212, 193, 193);
+  background: 0 40%;
   filter: blur(20px);
 }
 
@@ -168,13 +172,13 @@ export default {
 
 .detail_list .detail_list_info h2 {
   font-size: 22px;
-  color: #000;
+  color: #fff;
   font-weight: normal;
   line-height: 40px;
 }
 
 .detail_list .detail_list_info p {
-  color: #000;
+  color: #fff;
   line-height: 20px;
   font-size: 14px;
   margin-bottom: 5px;
