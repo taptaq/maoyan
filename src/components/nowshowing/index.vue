@@ -9,8 +9,8 @@
       >
         <ul>
           <li class="pulldownmsg">{{ pulldownmessage }}</li>
-          <li v-for="item in movielist" :key="item.id">
-            <div class="pic_show" @click="handletodetail">
+          <li v-for="item in movielist" :key="item.id" @click="handletodetail(item.id)">
+            <div class="pic_show">
               <img :src="item.img | setWH('128.180')" alt="" />
             </div>
 
@@ -57,8 +57,9 @@ export default {
   },
 
   methods: {
-    handletodetail() {
-      console.log("detail");
+    handletodetail(movieid) {
+      // console.log(movieid);
+      this.$router.push("/detail/1/" + movieid);
     },
 
     handletoscroll(pos) {

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div>
+    <div class="main">
       <Header title="猫眼movie" />
 
       <div class="content">
@@ -28,6 +28,8 @@
           <router-view />
         </keep-alive>
       </div>
+
+      <router-view name="detail" />
     </div>
   </section>
 </template>
